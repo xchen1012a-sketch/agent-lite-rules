@@ -51,6 +51,8 @@
 
 ```text
 workspace/
+├── CLAUDE.md   # 工作区路由入口，可选
+├── AGENTS.md   # 工作区路由入口，可选
 ├── backend/    # 独立 Git 仓库: backend/.git
 └── frontend/   # 独立 Git 仓库: frontend/.git
 ```
@@ -59,6 +61,9 @@ workspace/
 
 - 父目录只做协调，不执行 `git init` / `git add` / `git commit` / `git push`。
 - 不在父目录创建 `.git`。
+- 父目录可以保留 `CLAUDE.md` / `AGENTS.md`，但只能做子仓路由和跨仓计划入口。
+- 父目录不保留完整执行规则源；多子仓接入完成后，完整 `.ai-spec` 应位于各子仓。
+- 每个子仓必须有自己的 `CLAUDE.md` / `AGENTS.md`，指向本子仓 `.ai-spec`。
 - 后端目录需要 Git 时，只在 `backend/` 初始化。
 - 前端目录需要 Git 时，只在 `frontend/` 初始化。
 - 后端改动只在后端仓库提交。
