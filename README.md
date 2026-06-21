@@ -32,16 +32,18 @@
 
 ## 3. 接入
 
-在目标项目根目录执行：
+在目标项目根目录执行。
+
+macOS / Linux：
 
 ```bash
-git clone https://github.com/xchen1012a-sketch/agent-lite-rules.git .ai-spec
+git clone https://github.com/xchen1012a-sketch/agent-lite-rules.git .ai-spec && bash .ai-spec/scripts/create-entry.sh && bash .ai-spec/scripts/refresh-project-facts.sh
 ```
 
-创建 `CLAUDE.md` / `AGENTS.md`：
+Windows：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .ai-spec\scripts\create-entry.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -Command "git clone https://github.com/xchen1012a-sketch/agent-lite-rules.git .ai-spec; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & .\.ai-spec\scripts\create-entry.ps1; & .\.ai-spec\scripts\refresh-project-facts.ps1"
 ```
 
 脚本不会覆盖已有入口文件；冲突时生成 `.proposed`。
@@ -52,7 +54,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .ai-spec\scripts\create-entr
 2. 读 `.ai-spec/.ai-rules/README.md`。
 3. 读 `.ai-spec/.ai-rules/task-routing.md`。
 4. 读 `.ai-spec/.ai-rules/context-loading.md`。
-5. 运行 `.ai-spec/scripts/refresh-project-facts.ps1` 检查并刷新 `[auto]` 项目事实。
+5. 运行 `.ai-spec/scripts/refresh-project-facts.ps1` 或 `.ai-spec/scripts/refresh-project-facts.sh` 检查并刷新 `[auto]` 项目事实。
 6. 按任务只读 0-2 个相关 `skills/*/SKILL.md`。
 7. 命中安全、权限、外部服务、全局配置时，再读 `redlines.md`。
 
@@ -66,16 +68,28 @@ L2+ 任务最终必须说明读取了哪些项目 rules / skills；命中项目 
 powershell -NoProfile -ExecutionPolicy Bypass -File .ai-spec\scripts\refresh-project-facts.ps1
 ```
 
+```bash
+bash .ai-spec/scripts/refresh-project-facts.sh
+```
+
 检查模板：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .ai-spec\scripts\check.ps1
 ```
 
+```bash
+bash .ai-spec/scripts/check.sh
+```
+
 提交前扫描：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .ai-spec\scripts\git-preflight.ps1
+```
+
+```bash
+bash .ai-spec/scripts/git-preflight.sh
 ```
 
 更新模板：
@@ -90,7 +104,7 @@ git -C .ai-spec pull --ff-only
 - 新项目：先做计划，确认后再生成计划文件和项目结构。
 - 已有项目：先只读盘点；确认前不改业务代码、不初始化 Git、不安装依赖、不启动服务。
 - L2+ bugfix / review-fix：先写 `docs/plans/phases/FIX-*.md` 或 `REV-*.md`，再分阶段修复和验证。
-- 提交或推送前运行 `git-preflight.ps1`；它只扫当前 Git 变更。
+- 提交或推送前运行 `git-preflight.ps1` / `git-preflight.sh`；它只扫当前 Git 变更。
 - `project-facts.md`：`[auto]` 由脚本刷新；`[manual]` 可由 AI 填写，但必须带来源/状态，未知项留空或标待确认。
 - 业务规则可选落到 `docs/rules/business-rules.md`，只记录有来源的规则、术语和冲突。
 

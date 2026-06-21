@@ -67,7 +67,7 @@ CLAUDE_CONTENT='# Claude Code 入口
 - `.ai-spec/.ai-rules/context-loading.md`
 - 命中的 `.ai-spec/skills/*/SKILL.md`
 
-启动或接管任务时，运行 `.ai-spec/scripts/refresh-project-facts.ps1` 检查并刷新 `.ai-spec/.ai-rules/project-facts.md`；脚本刷新 `[auto]` 段。AI 可按明确来源补全 `[manual]` 草案，必须写来源和状态，未知项标待确认。
+启动或接管任务时，运行 `.ai-spec/scripts/refresh-project-facts.ps1`（Windows）或 `.ai-spec/scripts/refresh-project-facts.sh`（macOS/Linux）检查并刷新 `.ai-spec/.ai-rules/project-facts.md`；脚本刷新 `[auto]` 段。AI 可按明确来源补全 `[manual]` 草案，必须写来源和状态，未知项标待确认。
 
 命中红线、安全、权限、外部服务、全局配置时读取：
 - `.ai-spec/.ai-rules/redlines.md`
@@ -90,7 +90,7 @@ Codex 必须先遵守系统/开发者指令，再读取：
 - `.ai-spec/.ai-rules/context-loading.md`
 - 命中的 `.ai-spec/skills/*/SKILL.md`
 
-启动或接管任务时，运行 `.ai-spec/scripts/refresh-project-facts.ps1` 检查并刷新 `.ai-spec/.ai-rules/project-facts.md`；脚本刷新 `[auto]` 段。AI 可按明确来源补全 `[manual]` 草案，必须写来源和状态，未知项标待确认。
+启动或接管任务时，运行 `.ai-spec/scripts/refresh-project-facts.ps1`（Windows）或 `.ai-spec/scripts/refresh-project-facts.sh`（macOS/Linux）检查并刷新 `.ai-spec/.ai-rules/project-facts.md`；脚本刷新 `[auto]` 段。AI 可按明确来源补全 `[manual]` 草案，必须写来源和状态，未知项标待确认。
 
 命中红线、安全、权限、外部服务、全局配置时读取：
 - `.ai-spec/.ai-rules/redlines.md`

@@ -102,6 +102,10 @@ chore(scope): update local scripts
 powershell -NoProfile -ExecutionPolicy Bypass -File .ai-spec\scripts\git-preflight.ps1
 ```
 
+```bash
+bash .ai-spec/scripts/git-preflight.sh
+```
+
 脚本只扫描当前 Git 变更，重点拦截真实 `.env`、私钥/证书、常见 token、超大文件和构建产物路径。脚本通过不代表可以跳过 `git diff` 人工确认。
 
 ## 停止条件

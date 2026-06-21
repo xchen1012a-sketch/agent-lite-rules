@@ -70,7 +70,10 @@ $requiredFiles = @(
   'skills\README.md',
   'scripts\create-entry.ps1',
   'scripts\git-preflight.ps1',
+  'scripts\git-preflight.sh',
   'scripts\refresh-project-facts.ps1',
+  'scripts\refresh-project-facts.sh',
+  'scripts\check.sh',
   'scripts\create-entry.cmd',
   'scripts\create-entry.sh'
 )

@@ -11,7 +11,7 @@
 1. 先读 `.ai-rules/README.md`，确认规则位置。
 2. 再读 `.ai-rules/task-routing.md`，判断任务等级。
 3. 再读 `.ai-rules/context-loading.md`，决定最小上下文。
-4. 运行 `scripts/refresh-project-facts.ps1` 检查并刷新 `.ai-rules/project-facts.md`；脚本刷新 `[auto]` 段，AI 可按明确来源补全 `[manual]` 草案并标状态。
+4. 运行 `scripts/refresh-project-facts.ps1`（Windows）或 `scripts/refresh-project-facts.sh`（macOS/Linux）检查并刷新 `.ai-rules/project-facts.md`；脚本刷新 `[auto]` 段，AI 可按明确来源补全 `[manual]` 草案并标状态。
 5. 按任务类型只读取 0-2 个相关 `skills/*/SKILL.md`。
 6. 命中红线、安全、权限、外部服务、全局配置时读取 `.ai-rules/redlines.md`。
 7. 不默认全量读取 `.ai-rules/`、`skills/`、`docs/`。

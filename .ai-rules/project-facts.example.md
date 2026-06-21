@@ -9,7 +9,7 @@
 
 - source hash：待刷新
 - last refresh：待刷新
-- refresh command：`scripts/refresh-project-facts.ps1`
+- refresh command：`scripts/refresh-project-facts.ps1` or `scripts/refresh-project-facts.sh`
 
 ## [auto] 技术栈
 

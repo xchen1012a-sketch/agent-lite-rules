@@ -19,7 +19,9 @@
 - `skill-contract.md`：所有 skill 共用执行契约。
 - `project-facts.example.md`：项目事实模板；真实项目可生成 `project-facts.md`，其中 `[auto]` 可刷新，`[manual]` 可由 AI 按来源填写并等待用户确认。
 - `docs/rules/business-rules.example.md`：可选业务规则模板，用来源、可信度和冲突记录防止规则漂移。
-- `scripts/git-preflight.ps1`：提交前扫描变更文件中的密钥、真实 `.env`、超大文件和构建产物路径。
+- `scripts/refresh-project-facts.ps1` / `.sh`：刷新 `project-facts.md` 的 `[auto]` 段。
+- `scripts/check.ps1` / `.sh`：检查模板结构、skill 契约和大小预算。
+- `scripts/git-preflight.ps1` / `.sh`：提交前扫描变更文件中的密钥、真实 `.env`、超大文件和构建产物路径。
 
 ## 读取顺序
 
@@ -35,8 +37,8 @@
 
 - 涉及 Git、提交、分支、MR/PR 时读取 `git-workflow.md`。
 - 涉及新增模块、多文件实现、重构、报告输出结构时读取 `modularity-output.md`。
-- 启动或接管任务时，运行 `scripts/refresh-project-facts.ps1` 检查并刷新 `project-facts.md`；脚本只刷新 `[auto]` 段，hash 未变化时不会写入。
+- 启动或接管任务时，运行 `scripts/refresh-project-facts.ps1`（Windows）或 `scripts/refresh-project-facts.sh`（macOS/Linux）检查并刷新 `project-facts.md`；脚本只刷新 `[auto]` 段，hash 未变化时不会写入。
 - 涉及业务规则、领域术语、规则冲突或验收口径时，可参考 `docs/rules/business-rules.example.md` 创建项目内业务规则文件。
-- 提交或推送前，运行 `scripts/git-preflight.ps1`；脚本只扫描当前 Git 变更，不替代人工 review。
+- 提交或推送前，运行 `scripts/git-preflight.ps1` 或 `scripts/git-preflight.sh`；脚本只扫描当前 Git 变更，不替代人工 review。
 - 用户询问双工具协作、全栈流程、Handoff 时读取模板根目录 `AI双工具全栈开发操作手册.md`。
 - 普通开发任务不要默认读取操作手册。

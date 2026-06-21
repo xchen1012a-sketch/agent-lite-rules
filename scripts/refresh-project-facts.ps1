@@ -245,81 +245,32 @@ function Get-SourceHash {
 }
 
 function Get-ManualSection {
-  param([string]$ExistingText)
+  param(
+    [string]$ExistingText,
+    [string]$RulesRoot
+  )
 
-  $default = @"
-<!-- ai-facts:manual:start -->
-## [manual] Project identity
-
-| Field | Value | Source | Status |
-|---|---|---|---|
-| Project name |  |  | pending confirmation |
-| Product positioning |  |  | pending confirmation |
-| Business domain |  |  | pending confirmation |
-| Repository/sub-repository names |  |  | pending confirmation |
-
-## [manual] Module vocabulary
-
-| Module | Description | Naming prefix/path | Source | Status |
-|---|---|---|---|---|
-| frontend |  |  |  | pending confirmation |
-| backend |  |  |  | pending confirmation |
-| database |  |  |  | pending confirmation |
-| ops |  |  |  | pending confirmation |
-
-## [manual] Phase prefixes
-
-| Prefix | Meaning | Source | Status |
-|---|---|---|---|
-| FE |  |  | pending confirmation |
-| BE |  |  | pending confirmation |
-| DB |  |  | pending confirmation |
-| OPS |  |  | pending confirmation |
-
-## [manual] Current phase
-
-| Field | Value | Source | Status |
-|---|---|---|---|
-| Current phase |  |  | pending confirmation |
-| Next step |  |  | pending confirmation |
-
-## [manual] External services
-
-| Service | Purpose/boundary | Source | Status |
-|---|---|---|---|
-| Database |  |  | pending confirmation |
-| Redis |  |  | pending confirmation |
-| AI service |  |  | pending confirmation |
-| Object storage |  |  | pending confirmation |
-
-## [manual] Generated and protected paths
-
-| Type | Path | Rule | Source | Status |
-|---|---|---|---|---|
-| Generated directory |  | Do not edit by hand; update through generation command |  | pending confirmation |
-| Protected directory |  | Read only or confirm first |  | pending confirmation |
-| Command-generated only |  | Record generation command |  | pending confirmation |
-
-## [manual] Safety boundaries
-
-| Boundary | Rule | Source | Status |
-|---|---|---|---|
-| No real production services |  |  | pending confirmation |
-| Dangerous commands |  |  | pending confirmation |
-<!-- ai-facts:manual:end -->
-"@
-
-  if (-not $ExistingText) {
-    return $default.TrimEnd()
+  $default = ""
+  $examplePath = Join-Path $RulesRoot "project-facts.example.md"
+  $pattern = '(?s)<!-- ai-facts:manual:start -->.*?<!-- ai-facts:manual:end -->'
+  if (Test-Path -LiteralPath $examplePath -PathType Leaf) {
+    $exampleText = Get-Content -LiteralPath $examplePath -Encoding UTF8 -Raw
+    $exampleMatch = [regex]::Match($exampleText, $pattern)
+    if ($exampleMatch.Success) {
+      $default = $exampleMatch.Value.TrimEnd()
+    }
   }
 
-  $pattern = '(?s)<!-- ai-facts:manual:start -->.*?<!-- ai-facts:manual:end -->'
+  if (-not $ExistingText) {
+    return $default
+  }
+
   $match = [regex]::Match($ExistingText, $pattern)
   if ($match.Success) {
     return $match.Value.TrimEnd()
   }
 
-  return ($default.TrimEnd() + "`n`n## [manual] Legacy content to review`n`n" + $ExistingText.TrimEnd())
+  return ($default + "`n`n## [manual] Legacy content to review`n`n" + $ExistingText.TrimEnd())
 }
 
 $roots = Resolve-Roots -ExplicitRoot $ProjectRoot
@@ -355,7 +306,7 @@ $techLines = Find-TechStack -Dependencies $packageMaps.Dependencies
 $scriptLines = Get-ScriptLines -Scripts $packageMaps.Scripts
 $envLines = Get-EnvKeys -ProjectRoot $projectRoot
 $gitLines = Get-GitFacts -ProjectRoot $projectRoot
-$manualSection = Get-ManualSection -ExistingText $existingText
+$manualSection = Get-ManualSection -ExistingText $existingText -RulesRoot $rulesRoot
 $fence = '```'
 
 $autoSection = @"

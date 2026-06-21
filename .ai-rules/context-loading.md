@@ -24,7 +24,7 @@
 
 - 如果存在规则目录下的 `project-facts.md`，优先读取它。
 - 如果不存在 `project-facts.md`，允许根据同目录的 `project-facts.example.md` 创建；先填充 `[auto]` 段，再按明确来源补全 `[manual]` 草案。
-- 启动或接管任务时，运行 `scripts/refresh-project-facts.ps1` 检查并刷新；脚本会在 `project-facts.md` 缺失或 source hash 变化时只更新 `[auto]` 段。
+- 启动或接管任务时，运行 `scripts/refresh-project-facts.ps1`（Windows）或 `scripts/refresh-project-facts.sh`（macOS/Linux）检查并刷新；脚本会在 `project-facts.md` 缺失或 source hash 变化时只更新 `[auto]` 段。
 - 没有脚本或脚本失败时，AI 只能基于可验证来源手动更新 `[auto]` 段，并说明失败原因。
 - `[auto]` 段只能记录机器可验证事实：依赖、脚本、目录结构、环境变量 key、Git 状态。
 - `[manual]` 段由 AI 按来源填写、用户确认：项目定位、业务域、模块词表、阶段前缀、当前阶段、安全边界、生成/禁改路径。
