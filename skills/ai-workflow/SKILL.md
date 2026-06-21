@@ -51,6 +51,24 @@ running -> failed
 running -> canceled
 ```
 
+## 模块边界
+
+- `workflows/` 只定义流程图、节点列表、边和版本；不得直接执行外部副作用。
+- `nodes/` 只实现单节点职责、输入输出 schema 和失败语义。
+- `agents/` 负责任务策略和上下文选择；不得绕过节点状态机直接改数据库或文件。
+- `skills/` 描述可复用能力；不得把整个项目上下文塞进一个 skill。
+- `prompts/` 保存模板、版本、变量和输出 schema；不得散落在业务代码字符串里。
+- `runners/`、`executors/` 负责调度、重试、取消、恢复和超时。
+- `tools/`、`adapters/` 只封装外部工具调用；LLM 输出必须先校验再传入。
+- `traces/`、`logs/`、`events/` 记录节点级证据；不得只存最终摘要。
+- `state/`、`stores/` 管理运行态；长期事实仍按数据库规则落库。
+
+## 相邻 Skill 触发
+
+- 节点状态、运行记录、prompt 版本或审计需要持久化时，同时触发 `database`。
+- 对外暴露运行、取消、重试、恢复 API 时，同时触发 `backend-api`。
+- 节点涉及图片、音频、视频、FFmpeg、TTS 或 ComfyUI 时，同时触发 `media-pipeline`。
+
 ## 常见合理化借口
 
 | 借口 | 实际处理 |

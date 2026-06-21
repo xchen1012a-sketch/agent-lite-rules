@@ -48,6 +48,23 @@ description: 构建生产质量 Web 前端。用于 Vue、React、Vite、Next、
 - 表单校验靠 schema 或统一规则，不散落在模板里。
 - URL state 用于筛选、分页、可分享状态；不要滥用全局 store。
 
+## 文件边界
+
+- `pages/`、`routes/` 只组织路由级布局、数据入口和页面状态，不沉淀可复用业务组件。
+- `components/` 只放可复用 UI；单个组件超过约 200 行或混入请求逻辑时必须拆分。
+- `features/<domain>/` 放领域组件、hooks/composables、局部 store 和领域类型。
+- `api/`、`services/`、`clients/` 集中封装请求、错误映射和 contract 适配；组件不得直接散落 `fetch/axios`。
+- `stores/` 只放跨页面状态；局部状态保留在页面或 feature 内。
+- `types/` 只放共享类型；API 类型优先来自契约或生成文件，不手写猜字段。
+- `styles/`、`tokens/` 放主题、变量和全局样式；不得在组件里堆重复魔法数。
+- 测试文件贴近被测模块；E2E 按用户流程命名，不按实现细节命名。
+
+## 相邻 Skill 触发
+
+- 需要新增或改变 API 字段、错误形状、权限或分页语义时，同时触发 `backend-api`。
+- 需要端到端流程、真实浏览器验证或回归矩阵时，同时触发 `testing-verification`。
+- 涉及上传、导出、音视频、图片处理或素材库时，同时触发 `media-pipeline`。
+
 ## 常见合理化借口
 
 | 借口 | 实际处理 |

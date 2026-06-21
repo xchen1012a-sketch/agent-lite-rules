@@ -50,6 +50,22 @@ description: 设计数据库和迁移。用于 schema、migration、索引、审
 - 数据生命周期清楚。
 - 回滚或恢复策略清楚。
 
+## 模块边界
+
+- `migrations/` 只放结构或数据迁移；不得写业务查询、API 逻辑或运行时分支。
+- `schema/`、`models/`、`entities/` 描述表结构、关系、枚举和约束；不得直接调用外部服务。
+- `repositories/`、`dao/`、`queries/` 只封装持久化访问；不得混入 HTTP、权限、媒体或 LLM 编排。
+- `services/` 承担业务事务和规则编排；不得散落 raw SQL，除非项目已有约定且有测试覆盖。
+- `seed/`、`fixtures/` 只放开发或测试数据；不得伪装成正式迁移。
+- `scripts/` 中的数据修复必须支持 dry-run、范围过滤和执行报告。
+- 表名、字段名、migration 文件名必须来自项目词表或已确认模型，不为方便随意起名。
+
+## 相邻 Skill 触发
+
+- 改 API 可见字段、DTO 或错误语义时，同时触发 `backend-api`。
+- 改页面依赖字段或筛选/分页语义时，同时触发 `frontend-web`。
+- 改生产风险、权限、审计、脱敏或密钥相关字段时，同时触发 `security-hardening`。
+
 ## 停止条件
 
 以下情况必须暂停询问用户：
