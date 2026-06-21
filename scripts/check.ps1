@@ -59,6 +59,7 @@ $requiredFiles = @(
   '.ai-rules\context-loading.md',
   '.ai-rules\documentation-policy.md',
   '.ai-rules\git-workflow.md',
+  '.ai-rules\modularity-output.md',
   '.ai-rules\project-facts.example.md',
   'skills\README.md',
   'scripts\create-entry.ps1',

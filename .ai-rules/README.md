@@ -15,6 +15,7 @@
 - `context-loading.md`：决定最小读取范围。
 - `documentation-policy.md`：什么时候更新文档。
 - `git-workflow.md`：Git 分支、提交、MR/PR 和分仓提交规范。
+- `modularity-output.md`：模块化代码、模块化文档和模块化交付输出规范。
 - `project-facts.example.md`：项目事实模板；真实项目可另建 `project-facts.md`。
 
 ## 读取顺序
@@ -30,5 +31,6 @@
 ## 按需读取
 
 - 涉及 Git、提交、分支、MR/PR 时读取 `git-workflow.md`。
+- 涉及新增模块、多文件实现、重构、报告输出结构时读取 `modularity-output.md`。
 - 用户询问双工具协作、全栈流程、Handoff 时读取模板根目录 `AI双工具全栈开发操作手册.md`。
 - 普通开发任务不要默认读取操作手册。
