@@ -47,21 +47,26 @@
 
 ## 多仓工作区
 
-如果父目录下面有多个独立 Git 子仓：
+如果项目被规划为前后端分离多子仓，父级目录只做工作区和协调目录，不做 Git 仓库；Git 仓库建在各个子目录里。
 
 ```text
 workspace/
-├── backend/    # 独立 git 仓库
-└── frontend/   # 独立 git 仓库
+├── backend/    # 独立 Git 仓库: backend/.git
+└── frontend/   # 独立 Git 仓库: frontend/.git
 ```
 
 必须遵守：
 
-- 父目录只做协调，不执行 `git add` / `git commit` / `git push`。
+- 父目录只做协调，不执行 `git init` / `git add` / `git commit` / `git push`。
+- 不在父目录创建 `.git`。
+- 后端目录需要 Git 时，只在 `backend/` 初始化。
+- 前端目录需要 Git 时，只在 `frontend/` 初始化。
 - 后端改动只在后端仓库提交。
 - 前端改动只在前端仓库提交。
 - 跨仓任务分别检查每个子仓的 `git status`。
 - 跨仓任务分别提交；不要把多个仓库当成一个仓库提交。
+
+如果发现父目录已有 `.git`，必须停下来报告，让用户确认是保留 monorepo、迁移为多子仓，还是暂不处理。不得自动移动、删除或重建 Git 历史。
 
 ## 分支命名
 

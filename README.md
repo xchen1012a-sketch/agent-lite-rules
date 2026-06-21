@@ -139,7 +139,7 @@ Codex 必须先遵守系统/开发者指令，再读取：
 ```text
 我确认刚才的项目计划，可以开始执行。
 
-要求：这是新项目流程。请先生成 docs/plans/project-plan.md、docs/plans/current.md 和 docs/plans/phases/*.md；计划里必须固化项目名称、模块词表、仓库/子仓命名、阶段前缀和项目目录草图；再按确认后的结构接入父目录的 .ai-spec；单项目就在项目根目录接入，多子仓就每个子仓独立接入；在每个目标项目根目录生成 CLAUDE.md 和 AGENTS.md 指向 .ai-spec；如果当前项目没有 Git，可以初始化项目级 Git，但不创建 remote、不 push、不自动提交；已有同名文件生成 .proposed，不覆盖；不安装依赖、不写业务代码；完成后输出接入报告。
+要求：这是新项目流程。请先生成 docs/plans/project-plan.md、docs/plans/current.md 和 docs/plans/phases/*.md；计划里必须固化项目名称、模块词表、仓库/子仓命名、阶段前缀和项目目录草图；再按确认后的结构接入父目录的 .ai-spec；单项目就在项目根目录接入并可初始化项目级 Git；多子仓时父级目录只做协调、不初始化 Git，分别在 frontend/、backend/ 等子仓目录初始化 Git；在每个目标项目根目录生成 CLAUDE.md 和 AGENTS.md 指向 .ai-spec；不创建 remote、不 push、不自动提交；已有同名文件生成 .proposed，不覆盖；不安装依赖、不写业务代码；完成后输出接入报告。
 ```
 
 ## 执行已确认计划
