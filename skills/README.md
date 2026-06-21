@@ -22,6 +22,7 @@
 ## 领域 Skills
 
 - `project-planning`：项目初始化、阶段切换、架构变化。
+- `project-domain`：项目业务域、模块词表、项目专属约定和命名边界。
 - `frontend-web`：Web 前端、UI、API client。
 - `backend-api`：REST/OpenAPI、DTO、service/repository。
 - `database`：数据库设计、迁移、索引。

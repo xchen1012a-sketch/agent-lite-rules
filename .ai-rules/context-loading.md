@@ -30,8 +30,12 @@
 ## 项目事实优先级
 
 - 如果存在规则目录下的 `project-facts.md`，优先读取它。
-- 如果不存在 `project-facts.md`，不要自动创建。
-- 只有用户要求生成项目事实时，才根据同目录的 `project-facts.example.md` 创建 `project-facts.md`。
+- 如果不存在 `project-facts.md`，允许根据同目录的 `project-facts.example.md` 创建，但只能填充 `[auto]` 段；`[manual]` 段保持空白模板。
+- 启动或接管任务时，运行 `scripts/refresh-project-facts.ps1` 检查并刷新；脚本会在 `project-facts.md` 缺失或 source hash 变化时只更新 `[auto]` 段。
+- 没有脚本或脚本失败时，AI 只能基于可验证来源手动更新 `[auto]` 段，并说明失败原因。
+- `[auto]` 段只能记录机器可验证事实：依赖、脚本、目录结构、环境变量 key、Git 状态。
+- `[manual]` 段只能由用户或已确认计划维护：项目定位、业务域、模块词表、阶段前缀、当前阶段、安全边界。
+- AI 不得猜测、自动补全或覆盖 `[manual]` 段。
 - `project-facts.example.md` 只是模板，不代表当前项目事实。
 
 ## docs 默认不读
@@ -41,6 +45,17 @@
 - L3/L4 任务。
 - 用户明确询问计划、契约、验收、回归。
 - 当前任务需要更新 contract、checklist、current phase。
+
+## 修复/Review 计划上下文
+
+修 bug、找 bug、测试失败恢复、运行异常排查、代码 review 后继续修复时，按任务等级加载计划上下文：
+
+- L0/L1：通常不读 `docs/plans/`，除非用户明确要求写计划。
+- L2 及以上：先读 `docs/plans/README.md`；如果存在 `docs/plans/current.md`，再读 current 指向的阶段文件。
+- 没有现成计划时，在 `docs/plans/phases/` 下创建本次修复或 review-fix 计划文件。
+- 计划文件先写清阶段，再改代码；不得用最终总结代替前置计划。
+- 每阶段完成后，把验证证据写回计划文件或在最终输出中明确说明未写回原因。
+
 ## Skill 加载优先级
 
 默认使用 `project-first`：项目内 `.ai-spec/skills/` 优先，用户本地 skills 只在项目 skill 明显不足时补充。

@@ -24,6 +24,17 @@
 - 本地 skill 不能覆盖项目红线、契约、任务等级和验证要求。
 - 任何模式都不允许自动修改用户全局 Claude / Codex 配置。
 
+## 全局规则边界
+
+Claude Code、Codex 或其它工具可能会把用户全局 rules、memory、skills 或 system prompt 预先注入上下文。项目规则无法阻止这些内容出现，但可以规定冲突处理：
+
+- 系统/开发者指令优先级最高。
+- 在系统/开发者指令之后，当前项目 `.ai-spec/` 是项目事实、任务路由、验证要求和交付格式的优先来源。
+- 全局 rules 只能补充通用能力，不得覆盖当前项目的 `project-facts.md`、docs/plans、contracts、redlines、task-routing 和 skills。
+- L2 及以上任务最终输出必须说明读取了哪些项目规则和项目 skills。
+- 如果任务命中了项目 skill，但实际读取项目 skill 数量为 0，必须停止继续实现，回到 `.ai-rules/task-routing.md` 重新路由。
+- 用户明确指定 `project-only` 时，不读取用户本地 skills；已注入的全局内容只能作为背景，不作为执行依据。
+
 ## 模块化要求
 
 - 写代码必须保持模块化：职责单一、边界清楚、入口轻、逻辑可测。
@@ -32,11 +43,28 @@
 - 如果任务会破坏现有模块边界，必须先报告并等待用户确认。
 - 涉及新增模块、多文件实现、重构或输出结构复杂时，读取 `.ai-rules/modularity-output.md`。
 
+## 修复和 Review 计划
+
+修 bug、找 bug、测试失败恢复、运行异常排查、代码 review 后继续修复，默认不能直接边看边改。
+
+必须先产出 Markdown 阶段计划，再按阶段执行：
+
+- L0 解释错误、只读 review、单点问答：可以不写计划文件。
+- L1 明确小改：可在回复里给简短步骤，不强制落文件。
+- L2 及以上 bugfix / debugging / review-fix：必须先写入或更新 `docs/plans/phases/<FIX-or-REV>-<short-name>.md`。
+- 如果项目已有 `docs/plans/current.md`，必须把当前阶段指向该修复计划；如果没有，只创建本次修复计划文件。
+- 计划文件必须包含：现象/问题、证据、影响范围、不做事项、分阶段修复步骤、每阶段验证方式、停止条件、回滚/降级方式。
+- 写完计划后，先执行第一阶段；每阶段完成后更新计划中的状态和验证证据。
+- 发现计划外文件、跨模块根因或需要扩大范围时，先更新计划并报告，等用户确认后再继续。
+
+这个计划要求不额外消耗 skill 名额；由命中的 `debugging-recovery`、`code-review-quality` 或相关实现 skill 执行。
+
 ## Skill 路由
 
 ### 领域 skill
 
 - 项目初始化、阶段切换、架构变化：`project-planning`
+- 项目业务域、模块词表、项目专属约定：`project-domain`
 - Web 前端、UI、API client：`frontend-web`
 - REST/OpenAPI、DTO、service/repository：`backend-api`
 - 数据库设计、迁移、索引：`database`

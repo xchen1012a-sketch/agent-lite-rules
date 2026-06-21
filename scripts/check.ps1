@@ -60,12 +60,15 @@ $requiredFiles = @(
   '.ai-rules\documentation-policy.md',
   '.ai-rules\git-workflow.md',
   '.ai-rules\modularity-output.md',
+  '.ai-rules\skill-contract.md',
   '.ai-rules\project-facts.example.md',
   'docs\plans\README.md',
   'docs\plans\project-plan.example.md',
   'docs\plans\current.example.md',
+  'docs\plans\bugfix-review-plan.example.md',
   'skills\README.md',
   'scripts\create-entry.ps1',
+  'scripts\refresh-project-facts.ps1',
   'scripts\create-entry.cmd',
   'scripts\create-entry.sh'
 )
