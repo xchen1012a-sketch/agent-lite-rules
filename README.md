@@ -54,11 +54,13 @@ git clone https://github.com/xchen1012a-sketch/agent-lite-rules.git .ai-spec
 
 不要 clone 到 `~/.claude/`、`~/.codex/` 或任何全局配置目录。
 
-## 创建根入口
+## 创建项目入口
 
-拉取到 `.ai-spec/` 后，还需要在项目根目录创建 `CLAUDE.md` 和 `AGENTS.md`。否则 Claude Code / Codex 不一定会自动读取 `.ai-spec/` 里的入口文件。
+确认当前目录就是单仓项目或具体子仓后，还需要在该项目根目录创建 `CLAUDE.md` 和 `AGENTS.md`。否则 Claude Code / Codex 不一定会自动读取 `.ai-spec/` 里的入口文件。
 
-不想手动创建时，直接运行脚本。脚本只创建根入口；如果已有同名文件，会生成 `.proposed`，不会覆盖。
+不想手动创建时，直接运行脚本。脚本只创建当前项目入口；如果已有同名文件，会生成 `.proposed`，不会覆盖。
+
+注意：如果 `.ai-spec/` 是临时拉到多子仓父目录的，不要直接运行本脚本。先看“父目录拉取后交给 AI 判断”，由 AI 根据项目结构决定父目录只保留路由入口，还是把规则接入具体子仓。
 
 PowerShell：
 
