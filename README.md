@@ -137,9 +137,17 @@ Codex 必须先遵守系统/开发者指令，再读取：
 确认计划后：
 
 ```text
-我确认刚才的项目计划。请按确认后的结构接入父目录的 .ai-spec。
+我确认刚才的项目计划，可以开始执行。
 
-要求：只做项目级接入；单项目就在项目根目录接入；多子仓就每个子仓独立接入；在每个目标项目根目录生成 CLAUDE.md 和 AGENTS.md 指向 .ai-spec；已有同名文件生成 .proposed，不覆盖；无 Git 时不自动初始化，已有 Git 时先报告 git status；不安装依赖、不写业务代码；完成后输出接入报告。
+要求：这是新项目流程。请先生成 docs/plans/project-plan.md、docs/plans/current.md 和 docs/plans/phases/*.md；再按确认后的结构接入父目录的 .ai-spec；单项目就在项目根目录接入，多子仓就每个子仓独立接入；在每个目标项目根目录生成 CLAUDE.md 和 AGENTS.md 指向 .ai-spec；如果当前项目没有 Git，可以初始化项目级 Git，但不创建 remote、不 push、不自动提交；已有同名文件生成 .proposed，不覆盖；不安装依赖、不写业务代码；完成后输出接入报告。
+```
+
+## 执行已确认计划
+
+```text
+我确认计划，可以开始执行当前阶段。
+
+请先读取 docs/plans/project-plan.md 和 docs/plans/current.md，只执行 current 指向的当前阶段。执行前先报告当前阶段目标、范围、不做事项、验收标准和计划修改的文件。不要同时推进多个阶段；遇到计划外文件先报告，等我确认。
 ```
 
 ## 已有项目接入
@@ -147,7 +155,15 @@ Codex 必须先遵守系统/开发者指令，再读取：
 ```text
 请使用父目录的 .ai-spec 接入当前已有项目。
 
-要求：先只读检查当前目录结构、已有 AI 规则、docs、scripts 和 Git 状态；无 Git 时不自动初始化，已有 Git 时报告 git status；在项目根目录生成 CLAUDE.md 和 AGENTS.md 指向 .ai-spec；不覆盖任何现有文件，冲突文件生成 .proposed；不修改业务代码；不安装依赖；不启动服务；不写用户全局 Claude / Codex 配置；输出接入报告。
+要求：这是老项目流程。先只读盘点当前目录结构、技术栈、已有 AI 规则、已有 docs/plans、scripts、Git 状态、关键入口文件；不要创建文件、不要初始化 Git、不要安装依赖、不要启动服务、不要修改业务代码、不要写用户全局 Claude / Codex 配置。请输出老项目接管报告，包括：项目事实、已有规则冲突、单仓/多仓判断、建议接入位置、是否需要新增或合并计划、风险、需要我确认的问题。
+```
+
+老项目确认接入后：
+
+```text
+我确认老项目接管报告，可以按建议接入。
+
+要求：优先沿用已有计划；没有计划再生成 docs/plans/project-plan.md、docs/plans/current.md 和 docs/plans/phases/*.md；在项目根目录生成 CLAUDE.md 和 AGENTS.md 指向 .ai-spec；不覆盖任何现有文件，冲突文件生成 .proposed；不修改业务代码；不安装依赖；不启动服务；无 Git 时不自动初始化；完成后输出接入报告。
 ```
 
 ## 更新模板
