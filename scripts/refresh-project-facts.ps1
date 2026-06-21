@@ -251,43 +251,61 @@ function Get-ManualSection {
 <!-- ai-facts:manual:start -->
 ## [manual] Project identity
 
-- Project name:
-- Product positioning:
-- Business domain:
-- Repository/sub-repository names:
+| Field | Value | Source | Status |
+|---|---|---|---|
+| Project name |  |  | pending confirmation |
+| Product positioning |  |  | pending confirmation |
+| Business domain |  |  | pending confirmation |
+| Repository/sub-repository names |  |  | pending confirmation |
 
 ## [manual] Module vocabulary
 
-| Module | Description | Naming prefix/path |
-|---|---|---|
-| frontend |  |  |
-| backend |  |  |
-| database |  |  |
-| ops |  |  |
+| Module | Description | Naming prefix/path | Source | Status |
+|---|---|---|---|---|
+| frontend |  |  |  | pending confirmation |
+| backend |  |  |  | pending confirmation |
+| database |  |  |  | pending confirmation |
+| ops |  |  |  | pending confirmation |
 
 ## [manual] Phase prefixes
 
-- FE:
-- BE:
-- DB:
-- OPS:
+| Prefix | Meaning | Source | Status |
+|---|---|---|---|
+| FE |  |  | pending confirmation |
+| BE |  |  | pending confirmation |
+| DB |  |  | pending confirmation |
+| OPS |  |  | pending confirmation |
 
 ## [manual] Current phase
 
-- Current phase:
-- Next step:
+| Field | Value | Source | Status |
+|---|---|---|---|
+| Current phase |  |  | pending confirmation |
+| Next step |  |  | pending confirmation |
 
 ## [manual] External services
 
-- Database:
-- Redis:
-- AI service:
-- Object storage:
+| Service | Purpose/boundary | Source | Status |
+|---|---|---|---|
+| Database |  |  | pending confirmation |
+| Redis |  |  | pending confirmation |
+| AI service |  |  | pending confirmation |
+| Object storage |  |  | pending confirmation |
+
+## [manual] Generated and protected paths
+
+| Type | Path | Rule | Source | Status |
+|---|---|---|---|---|
+| Generated directory |  | Do not edit by hand; update through generation command |  | pending confirmation |
+| Protected directory |  | Read only or confirm first |  | pending confirmation |
+| Command-generated only |  | Record generation command |  | pending confirmation |
 
 ## [manual] Safety boundaries
 
-- No real production services:
-- Dangerous commands:
+| Boundary | Rule | Source | Status |
+|---|---|---|---|
+| No real production services |  |  | pending confirmation |
+| Dangerous commands |  |  | pending confirmation |
 <!-- ai-facts:manual:end -->
 "@
 
@@ -376,7 +394,7 @@ $content = @"
 # Project facts
 
 > [auto] is refreshed by AI or scripts from repository state and only records verifiable facts.
-> [manual] is maintained by humans. AI must not guess, overwrite, or auto-fill it.
+> [manual] may be filled by AI from explicit sources and confirmed by humans. AI must mark uncertain entries as pending confirmation.
 
 $($autoSection.TrimEnd())
 

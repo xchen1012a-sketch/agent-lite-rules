@@ -62,18 +62,20 @@ $requiredFiles = @(
   '.ai-rules\modularity-output.md',
   '.ai-rules\skill-contract.md',
   '.ai-rules\project-facts.example.md',
+  'docs\rules\business-rules.example.md',
   'docs\plans\README.md',
   'docs\plans\project-plan.example.md',
   'docs\plans\current.example.md',
   'docs\plans\bugfix-review-plan.example.md',
   'skills\README.md',
   'scripts\create-entry.ps1',
+  'scripts\git-preflight.ps1',
   'scripts\refresh-project-facts.ps1',
   'scripts\create-entry.cmd',
   'scripts\create-entry.sh'
 )
 
-$requiredDirs = @('skills', '.ai-rules', 'docs', 'scripts')
+$requiredDirs = @('skills', '.ai-rules', 'docs', 'docs\rules', 'scripts')
 
 foreach ($dir in $requiredDirs) { Require-Dir $dir }
 foreach ($file in $requiredFiles) { Require-File $file }
@@ -126,6 +128,38 @@ $placeholderMatches = $scriptFiles | Select-String -Pattern $placeholderPatterns
 if ($placeholderMatches) {
   foreach ($match in $placeholderMatches) {
     $warnings.Add("Placeholder text remains: $($match.Path):$($match.LineNumber)")
+  }
+}
+
+$sizeBudgets = @(
+  [PSCustomObject]@{ Label = 'README.md'; Path = Join-Path $specRoot 'README.md'; MaxLines = 180 },
+  [PSCustomObject]@{ Label = '.ai-rules/*.md'; Path = Join-Path $specRoot '.ai-rules'; MaxLines = 160 },
+  [PSCustomObject]@{ Label = 'skills/*/SKILL.md'; Path = Join-Path $specRoot 'skills'; MaxLines = 120 }
+)
+
+foreach ($budget in $sizeBudgets) {
+  if (-not (Test-Path -LiteralPath $budget.Path)) { continue }
+
+  $files = @()
+  if ($budget.Label -eq '.ai-rules/*.md') {
+    $files = Get-ChildItem -LiteralPath $budget.Path -Filter '*.md' -File -ErrorAction SilentlyContinue |
+      Where-Object { $_.Name -ne 'project-facts.md' }
+  } elseif ($budget.Label -eq 'skills/*/SKILL.md') {
+    $files = Get-ChildItem -LiteralPath $budget.Path -Directory -ErrorAction SilentlyContinue |
+      ForEach-Object {
+        $skillFile = Join-Path $_.FullName 'SKILL.md'
+        if (Test-Path -LiteralPath $skillFile -PathType Leaf) { Get-Item -LiteralPath $skillFile }
+      }
+  } else {
+    $files = @(Get-Item -LiteralPath $budget.Path -ErrorAction SilentlyContinue)
+  }
+
+  foreach ($file in $files) {
+    $lineCount = (Get-Content -LiteralPath $file.FullName -Encoding UTF8 | Measure-Object -Line).Lines
+    if ($lineCount -gt $budget.MaxLines) {
+      $relative = $file.FullName -replace ('^' + [regex]::Escape($specRoot) + '[\\/]*'), ''
+      $warnings.Add("Size budget exceeded: $relative has $lineCount lines, budget $($budget.MaxLines). Consider splitting or slimming.")
+    }
   }
 }
 
